@@ -69,9 +69,11 @@
     "prepublishOnly": "npm test && npm pack --dry-run"
   },
   "dependencies": {
-    "@sinclair/typebox": "^0.34.49",
     "playwright-core": "^1.61.0",
     "steel-sdk": "^0.18.0"
+  },
+  "peerDependencies": {
+    "@sinclair/typebox": "*"
   },
   "overrides": {
     "form-data": "^4.0.6",

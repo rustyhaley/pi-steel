@@ -64,6 +64,7 @@ npm run test:package
 - **`dist/` is committed** — edit the JavaScript in `dist/` directly
 - **No separate build pipeline** — this fork treats `dist/` as the source of truth
 - **Published typings are local** — the package should not require the Pi runtime npm package just to resolve `.d.ts` files
+- **Host-provided packages are peers** — Pi injects `@sinclair/typebox`, `typebox`, and the `@earendil-works/pi-*` packages into extensions, so they go in `peerDependencies` with a `"*"` range and never in `dependencies`; a runtime dependency on one installs a physical copy that Pi warns about and that can bypass Pi's module mapping
 
 ## Verification checklist
 

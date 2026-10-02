@@ -10,6 +10,7 @@ All notable changes to `@false00/pi-steel` are documented here.
 
 ### Fixed
 - `steel_click` now fails fast on `about:blank` instead of spending the full selector timeout on a fresh session with no active page
+- `@sinclair/typebox` is now declared in `peerDependencies` with a `"*"` range instead of `dependencies`, because Pi supplies that package to extensions; the dependency form installed a second physical copy that Pi reports as an extension warning and that can bypass Pi's module mapping
 
 ### Security
 - GitHub Actions CI now audits production dependencies with `npm audit --omit=dev --audit-level=high`

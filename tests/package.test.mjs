@@ -33,10 +33,31 @@ test("published files include docs and policy files", () => {
   }
 });
 
+// Packages Pi injects into extensions at load time. They must be declared as peers so Pi's
+// module mapping is used instead of a physical copy, which would create duplicate runtime modules.
+const HOST_PROVIDED_PACKAGES = [
+  "@earendil-works/pi-ai",
+  "@earendil-works/pi-agent-core",
+  "@earendil-works/pi-coding-agent",
+  "@earendil-works/pi-tui",
+  "@sinclair/typebox",
+  "typebox",
+];
+
 test("dependency posture is hardened", () => {
   assert.equal(pkg.dependencies?.["steel-sdk"], "^0.18.0");
   assert.equal(pkg.dependencies?.["playwright-core"], "^1.61.0");
-  assert.equal(pkg.dependencies?.["@sinclair/typebox"], "^0.34.49");
-  assert.ok(!pkg.peerDependencies);
   assert.equal(pkg.overrides?.["form-data"], "^4.0.6");
+});
+
+test("host-provided Pi packages are peers, not dependencies", () => {
+  const bundled = HOST_PROVIDED_PACKAGES.filter(
+    (name) => pkg.dependencies?.[name] !== undefined,
+  );
+  assert.deepEqual(
+    bundled,
+    [],
+    `host-provided packages must not be runtime dependencies: ${bundled.join(", ")}`,
+  );
+  assert.equal(pkg.peerDependencies?.["@sinclair/typebox"], "*");
 });
